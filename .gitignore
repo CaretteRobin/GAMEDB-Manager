@@ -13,4 +13,3 @@ storage/
 # Fichiers système
 .DS_Store
 Thumbs.db
-database/games_data.sql
