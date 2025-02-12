@@ -1,0 +1,16 @@
+# Ignorer les dépendances Composer
+/vendor/
+composer.lock
+
+# Fichier de configuration sensible
+conf.ini
+
+# Cache et logs
+*.log
+/cache/
+storage/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+database/games_data.sql

@@ -1,0 +1,16 @@
+{
+    "name": "robin/projet-sgbd",
+    "autoload": {
+        "psr-4": {
+            "Models\\": "models/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Robin"
+        }
+    ],
+    "require": {
+        "illuminate/database": "^11.42"
+    }
+}
