@@ -3,6 +3,8 @@ use Models\Game;
 use Models\Company;
 use Models\Platform;
 use Models\Character;
+use Models\Rating;
+use Models\Genre;
 
 // a. Lister les jeux dont le nom contient « Marine »
 function getGamesWithNameContainingMarine() {
@@ -49,3 +51,12 @@ function getGamesDevelopedBySony() {
         $query->where('name', 'like', '%Sony%');
     })->get();
 }
+
+// i. Afficher le rating initial (indiquer le rating board) des jeux dont le nom contient « Mario »
+function getInitialRatingOfGamesWithNameMario() {
+    return Game::where('name', 'like', 'Mario%')
+        ->with(['ratings' => function($query) {
+            $query->select('name', 'rating_board_id');
+        }])->get();
+}
+

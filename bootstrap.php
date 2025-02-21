@@ -3,6 +3,7 @@
 require 'vendor/autoload.php';
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Pagination\Paginator;
 
 // Charger la configuration depuis conf.ini
 $config = parse_ini_file(__DIR__ . '/conf.ini', true);
@@ -28,5 +29,8 @@ $capsule->addConnection([
 
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
+
+// Configurer la pagination
+Paginator::useBootstrap();
 
 echo "✅ Eloquent est bien connecté à la base de données !\n";

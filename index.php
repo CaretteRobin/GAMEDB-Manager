@@ -11,6 +11,7 @@ $gamesWithPagination = getGamesWithPagination();
 $charactersOfGame12342 = getCharactersOfGame12342();
 $charactersOfGamesStartingWithMario = getCharactersOfGamesStartingWithMario();
 $gamesDevelopedBySony = getGamesDevelopedBySony();
+$initialRatingOfGamesWithNameMario = getInitialRatingOfGamesWithNameMario();
 ?>
 
 <!DOCTYPE html>
@@ -73,6 +74,13 @@ $gamesDevelopedBySony = getGamesDevelopedBySony();
     <ul>
         <?php foreach ($gamesDevelopedBySony as $game): ?>
             <li><?php echo htmlspecialchars($game->name, ENT_QUOTES, 'UTF-8'); ?></li>
+        <?php endforeach; ?>
+    </ul>
+
+    <h1>Rating initial des jeux dont le nom contient "Mario"</h1>
+    <ul>
+        <?php foreach ($initialRatingOfGamesWithNameMario as $game): ?>
+            <li><?php echo htmlspecialchars($game->name, ENT_QUOTES, 'UTF-8'); ?> - <?php echo htmlspecialchars($game->ratings->first()->name, ENT_QUOTES, 'UTF-8'); ?></li>
         <?php endforeach; ?>
     </ul>
 </body>
