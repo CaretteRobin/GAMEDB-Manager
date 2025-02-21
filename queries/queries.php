@@ -60,3 +60,51 @@ function getInitialRatingOfGamesWithNameMario() {
         }])->get();
 }
 
+// j. Afficher les jeux dont le nom débute par « Mario » et ayant plus de 3 personnages
+function getGamesWithNameMarioAndMoreThan3Characters() {
+    return Game::where('name', 'like', 'Mario%')
+        ->whereHas('characters', function($query) {
+            $query->groupBy('game2character.game_id')
+                  ->havingRaw('COUNT(game2character.character_id) > 3');
+        })->get();
+}
+
+// k. Afficher les jeux dont le nom débute par « Mario » et dont le rating initial contient "3+"
+function getGamesWithNameMarioAndRating3Plus() {
+    return Game::where('name', 'like', 'Mario%')
+        ->whereHas('ratings', function($query) {
+            $query->where('name', 'like', '%3+%');
+        })->get();
+}
+
+// l. Afficher les jeux dont le nom débute par « Mario », publiés par une compagnie dont le nom contient « Inc. » et dont le rating initial contient "3+"
+function getGamesWithNameMarioPublishedByIncAndRating3Plus() {
+    return Game::where('name', 'like', 'Mario%')
+        ->whereHas('publishers', function($query) {
+            $query->where('name', 'like', '%Inc.%');
+        })
+        ->whereHas('ratings', function($query) {
+            $query->where('name', 'like', '%3+%');
+        })->get();
+}
+
+// m. Afficher les jeux dont le nom débute par « Mario », publiés par une compagnie dont le nom contient « Inc », dont le rating initial contient "3+" et ayant reçu un avis de la part du rating board nommé « CERO »
+function getGamesWithNameMarioPublishedByIncRating3PlusAndCERO() {
+    return Game::where('name', 'like', 'Mario%')
+        ->whereHas('publishers', function($query) {
+            $query->where('name', 'like', '%Inc.%');
+        })
+        ->whereHas('ratings', function($query) {
+            $query->where('name', 'like', '%3+%')
+                ->where('rating_board_id', function($query) {
+                    $query->select('id')->from('rating_board')->where('name', 'CERO');
+                });
+        })->get();
+}
+
+// n. Ajouter un nouveau genre de jeu, et l'associer aux jeux 12, 56, 345
+function addNewGenreAndAssociateWithGames($genreName, $gameIds) {
+    $genre = Genre::create(['name' => $genreName]);
+    $genre->games()->attach($gameIds);
+    return $genre;
+}

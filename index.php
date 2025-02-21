@@ -12,6 +12,13 @@ $charactersOfGame12342 = getCharactersOfGame12342();
 $charactersOfGamesStartingWithMario = getCharactersOfGamesStartingWithMario();
 $gamesDevelopedBySony = getGamesDevelopedBySony();
 $initialRatingOfGamesWithNameMario = getInitialRatingOfGamesWithNameMario();
+$gamesWithNameMarioAndMoreThan3Characters = getGamesWithNameMarioAndMoreThan3Characters();
+$gamesWithNameMarioAndRating3Plus = getGamesWithNameMarioAndRating3Plus();
+$gamesWithNameMarioPublishedByIncAndRating3Plus = getGamesWithNameMarioPublishedByIncAndRating3Plus();
+$gamesWithNameMarioPublishedByIncRating3PlusAndCERO = getGamesWithNameMarioPublishedByIncRating3PlusAndCERO();
+
+// Ajouter un nouveau genre de jeu et l'associer aux jeux 12, 56, 345
+$newGenre = addNewGenreAndAssociateWithGames('Nouveau Genre', [12, 56, 345]);
 ?>
 
 <!DOCTYPE html>
@@ -83,5 +90,36 @@ $initialRatingOfGamesWithNameMario = getInitialRatingOfGamesWithNameMario();
             <li><?php echo htmlspecialchars($game->name, ENT_QUOTES, 'UTF-8'); ?> - <?php echo htmlspecialchars($game->ratings->first()->name, ENT_QUOTES, 'UTF-8'); ?></li>
         <?php endforeach; ?>
     </ul>
+
+    <h1>Jeux dont le nom débute par "Mario" et ayant plus de 3 personnages</h1>
+    <ul>
+        <?php foreach ($gamesWithNameMarioAndMoreThan3Characters as $game): ?>
+            <li><?php echo htmlspecialchars($game->name, ENT_QUOTES, 'UTF-8'); ?></li>
+        <?php endforeach; ?>
+    </ul>
+
+    <h1>Jeux dont le nom débute par "Mario" et dont le rating initial contient "3+"</h1>
+    <ul>
+        <?php foreach ($gamesWithNameMarioAndRating3Plus as $game): ?>
+            <li><?php echo htmlspecialchars($game->name, ENT_QUOTES, 'UTF-8'); ?></li>
+        <?php endforeach; ?>
+    </ul>
+
+    <h1>Jeux dont le nom débute par "Mario", publiés par une compagnie dont le nom contient "Inc." et dont le rating initial contient "3+"</h1>
+    <ul>
+        <?php foreach ($gamesWithNameMarioPublishedByIncAndRating3Plus as $game): ?>
+            <li><?php echo htmlspecialchars($game->name, ENT_QUOTES, 'UTF-8'); ?></li>
+        <?php endforeach; ?>
+    </ul>
+
+    <h1>Jeux dont le nom débute par "Mario", publiés par une compagnie dont le nom contient "Inc", dont le rating initial contient "3+" et ayant reçu un avis de la part du rating board nommé "CERO"</h1>
+    <ul>
+        <?php foreach ($gamesWithNameMarioPublishedByIncRating3PlusAndCERO as $game): ?>
+            <li><?php echo htmlspecialchars($game->name, ENT_QUOTES, 'UTF-8'); ?></li>
+        <?php endforeach; ?>
+    </ul>
+
+    <h1>Nouveau genre ajouté et associé aux jeux 12, 56, 345</h1>
+    <p>Genre : <?php echo htmlspecialchars($newGenre->name, ENT_QUOTES, 'UTF-8'); ?></p>
 </body>
 </html>
