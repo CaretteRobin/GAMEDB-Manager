@@ -64,7 +64,8 @@ function getInitialRatingOfGamesWithNameMario() {
 function getGamesWithNameMarioAndMoreThan3Characters() {
     return Game::where('name', 'like', 'Mario%')
         ->whereHas('characters', function($query) {
-            $query->groupBy('game2character.game_id')
+            $query->select('game2character.game_id')
+                  ->groupBy('game2character.game_id')
                   ->havingRaw('COUNT(game2character.character_id) > 3');
         })->get();
 }
