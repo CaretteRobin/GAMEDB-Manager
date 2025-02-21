@@ -1,33 +1,79 @@
 <?php
 
-require 'vendor/autoload.php';
+require 'bootstrap.php';
+require 'queries/queries.php';
 
-use Illuminate\Database\Capsule\Manager as Capsule;
+$gamesWithMarine = getGamesWithNameContainingMarine();
+$companiesInFrance = getCompaniesInFrance();
+$platformsWithInstallBase = getPlatformsWithInstallBase();
+$gamesFrom21173 = getGamesFrom21173();
+$gamesWithPagination = getGamesWithPagination();
+$charactersOfGame12342 = getCharactersOfGame12342();
+$charactersOfGamesStartingWithMario = getCharactersOfGamesStartingWithMario();
+$gamesDevelopedBySony = getGamesDevelopedBySony();
+?>
 
-// Charger la configuration depuis conf.ini
-$config = parse_ini_file(__DIR__ . '/conf.ini', true);
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des jeux</title>
+</head>
+<body>
+    <h1>Liste des jeux dont le nom contient "Marine"</h1>
+    <ul>
+        <?php foreach ($gamesWithMarine as $game): ?>
+            <li><?php echo htmlspecialchars($game->name, ENT_QUOTES, 'UTF-8'); ?></li>
+        <?php endforeach; ?>
+    </ul>
 
-// Vérifier si la config a été chargée
-if (!$config) {
-    die("❌ Erreur : Impossible de charger le fichier conf.ini\n");
-}
+    <h1>Liste des compagnies installées en France</h1>
+    <ul>
+        <?php foreach ($companiesInFrance as $company): ?>
+            <li><?php echo htmlspecialchars($company->name, ENT_QUOTES, 'UTF-8'); ?></li>
+        <?php endforeach; ?>
+    </ul>
 
-// Initialiser Eloquent
-$capsule = new Capsule;
-$capsule->addConnection([
-    'driver'    => 'mysql',
-    'host'      => $config['database']['host'],
-    'port'      => $config['database']['port'],
-    'database'  => $config['database']['database'],
-    'username'  => $config['database']['username'],
-    'password'  => $config['database']['password'],
-    'charset'   => $config['database']['charset'],
-    'collation' => $config['database']['collation'],
-    'prefix'    => '',
-]);
+    <h1>Liste des plateformes dont la base installée est >= 10 000 000</h1>
+    <ul>
+        <?php foreach ($platformsWithInstallBase as $platform): ?>
+            <li><?php echo htmlspecialchars($platform->name, ENT_QUOTES, 'UTF-8'); ?></li>
+        <?php endforeach; ?>
+    </ul>
 
-$capsule->setAsGlobal();
-$capsule->bootEloquent();
+    <h1>Liste de 200 jeux à partir du 21173 ème</h1>
+    <ul>
+        <?php foreach ($gamesFrom21173 as $game): ?>
+            <li><?php echo htmlspecialchars($game->name, ENT_QUOTES, 'UTF-8'); ?></li>
+        <?php endforeach; ?>
+    </ul>
 
-echo "✅ Eloquent est bien connecté à la base de données !\n";
+    <h1>Liste des jeux (pagination de 300)</h1>
+    <ul>
+        <?php foreach ($gamesWithPagination as $game): ?>
+            <li><?php echo htmlspecialchars($game->name, ENT_QUOTES, 'UTF-8'); ?> - <?php echo htmlspecialchars($game->deck, ENT_QUOTES, 'UTF-8'); ?></li>
+        <?php endforeach; ?>
+    </ul>
 
+    <h1>Personnages du jeu 12342</h1>
+    <ul>
+        <?php foreach ($charactersOfGame12342 as $character): ?>
+            <li><?php echo htmlspecialchars($character->name, ENT_QUOTES, 'UTF-8'); ?> - <?php echo htmlspecialchars($character->deck, ENT_QUOTES, 'UTF-8'); ?></li>
+        <?php endforeach; ?>
+    </ul>
+
+    <h1>Personnages des jeux dont le nom débute par "Mario"</h1>
+    <ul>
+        <?php foreach ($charactersOfGamesStartingWithMario as $character): ?>
+            <li><?php echo htmlspecialchars($character->name, ENT_QUOTES, 'UTF-8'); ?></li>
+        <?php endforeach; ?>
+    </ul>
+
+    <h1>Jeux développés par une compagnie dont le nom contient "Sony"</h1>
+    <ul>
+        <?php foreach ($gamesDevelopedBySony as $game): ?>
+            <li><?php echo htmlspecialchars($game->name, ENT_QUOTES, 'UTF-8'); ?></li>
+        <?php endforeach; ?>
+    </ul>
+</body>
+</html>
